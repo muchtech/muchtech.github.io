@@ -99,10 +99,10 @@
           //$("#rotationRate").text(info);
           var img_position = {
             key: 'Rotation',
-            left: -0.5*width + (width * avg(rotation.g)/90),
-            top: -0.5*height + (height * avg(rotation.b)/180)
+            left: 0.5*width + (width * avg(rotation.g)/90),
+            top: 0.5*height + (height * avg(rotation.b)/180)
           };
-          $('#img_pos').text('Left: '+img_position.left+'; Top: '+img_position.top + '; -0.5');
+          $('#img_pos').text('Left: '+img_position.left+'; Top: '+img_position.top + '; 0.5');
           updateImg(img_position);
         }
 
@@ -123,8 +123,16 @@
               $('.img_crop').css('left', left_val-1+'px');
               break;
             case 'Rotation':
-              $('.img_crop').css('left', eventData.left+'px');
-              $('.img_crop').css('top', eventData.top+'px');
+              if(eventData.left <= 0) {
+                $('.img_crop').css('left', eventData.left+'px');
+              } else {
+                $('.img_crop').css('left', -1*eventData.left+'px');
+              }
+              if(eventData.top <= 0) {
+                $('.img_crop').css('top', eventData.top+'px');
+              } else {
+                $('.img_crop').css('top', -1*eventData.top+'px');
+              }
               break;
           }
         }
