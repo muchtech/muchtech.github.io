@@ -5,14 +5,34 @@
     <script src="static/js/jquery-3.1.0.js"></script>
     <script>
       $( document ).ready(function() {
+        var acc = {
+          x: 0,
+          y: 0,
+          z: 0
+        }
+
+        var acc_gravity = {
+          x: 0,
+          y: 0,
+          z: 0
+        }
+
+        function deadband(old_val, new_val) {
+          var db = 0.001;
+          if(Math.abs(old_val-new_val) > db) {
+            old_val = new_val;
+          }
+          return old_val;
+        }
+
         function deviceMotionHandler(eventData) {
           var info, xyz = "[X, Y, Z]";
 
           // Grab the acceleration from the results
           var acceleration = eventData.acceleration;
-          info = xyz.replace("X", acceleration.x);
-          info = info.replace("Y", acceleration.y);
-          info = info.replace("Z", acceleration.z);
+          info = xyz.replace("X", deadband(acc.x, acceleration.x));
+          info = info.replace("Y", deadband(acc.y, acceleration.y));
+          info = info.replace("Z", deadband(acc.z, acceleration.z));
           $("#acceleration").text(info);
 
           // Grab the acceleration including gravity from the results
