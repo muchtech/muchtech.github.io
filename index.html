@@ -18,7 +18,7 @@
         }
 
         function deadband(old_val, new_val) {
-          var db = 0.1;
+          var db = 0.01;
           if(Math.abs(old_val-new_val) > db) {
             old_val = new_val;
           }
@@ -37,9 +37,9 @@
 
           // Grab the acceleration including gravity from the results
           acceleration = eventData.accelerationIncludingGravity;
-          info = xyz.replace("X", acceleration.x);
-          info = info.replace("Y", acceleration.y);
-          info = info.replace("Z", acceleration.z);
+          info = xyz.replace("X", deadband(acc_gravity.x, acceleration.x));
+          info = info.replace("Y", deadband(acc_gravity.y, acceleration.y));
+          info = info.replace("Z", deadband(acc_gravity.z, acceleration.z));
           $("#accelerationIncludingGravity").text(info);
 
           // Grab the rotation rate from the results
