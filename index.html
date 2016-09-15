@@ -99,8 +99,8 @@
           $("#rotationRate").text(info);
           var img_position = {
             key: 'Rotation',
-            left: width * (avg(rotation.g)-90)/180,
-            top: height * (avg(rotation.b)-180)/360
+            left: 0.25*width + (width * (avg(rotation.g)-90)/180),
+            top: 0.25*height + (height * (avg(rotation.b)-180)/360)
           };
           $('#img_pos').text('[-90]Left: '+img_position.left+'; [-180]Top: '+img_position.top);
           updateImg(img_position);
