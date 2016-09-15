@@ -37,15 +37,16 @@
 
         function deviceMotionHandler(eventData) {
           var info, xyz = "[X, Y, Z]";
+          var array_last = acc.x.length-1;
 
           // Grab the acceleration from the results
           var acceleration = eventData.acceleration;
           acc.x.shift();
-          acc.x.push(deadband(acc.x, acceleration.x));
+          acc.x.push(deadband(acc.x[array_last], acceleration.x));
           acc.y.shift();
-          acc.y.push(deadband(acc.y, acceleration.y));
+          acc.y.push(deadband(acc.y[array_last], acceleration.y));
           acc.z.shift();
-          acc.z.push(deadband(acc.z, acceleration.z));
+          acc.z.push(deadband(acc.z[array_last], acceleration.z));
 
           info = xyz.replace("X", avg(acc.x));
           info = info.replace("Y", avg(acc.y));
@@ -55,11 +56,11 @@
           // Grab the acceleration including gravity from the results
           acceleration = eventData.accelerationIncludingGravity;
           acc_gravity.x.shift();
-          acc_gravity.x.push(deadband(acc_gravity.x, acceleration.x));
+          acc_gravity.x.push(deadband(acc_gravity.x[array_last], acceleration.x));
           acc_gravity.y.shift();
-          acc_gravity.y.push(deadband(acc_gravity.y, acceleration.y));
+          acc_gravity.y.push(deadband(acc_gravity.y[array_last], acceleration.y));
           acc_gravity.z.shift();
-          acc_gravity.z.push(deadband(acc_gravity.z, acceleration.z));
+          acc_gravity.z.push(deadband(acc_gravity.z[array_last], acceleration.z));
 
           info = xyz.replace("X", avg(acc_gravity.x));
           info = info.replace("Y", avg(acc_gravity.y));
