@@ -96,13 +96,13 @@
           info = xyz.replace("X", avg(rotation.a));
           info = info.replace("Y", avg(rotation.b));
           info = info.replace("Z", avg(rotation.g));
-          $("#rotationRate").text(info);
+          //$("#rotationRate").text(info);
           var img_position = {
             key: 'Rotation',
-            left: 0.25*width + (width * (avg(rotation.g)-90)/180),
-            top: 0.25*height + (height * (avg(rotation.b)-180)/360)
+            left: 0.5*width + (width * (avg(rotation.g)-90)/180),
+            top: 0.5*height + (height * (avg(rotation.b)-180)/360)
           };
-          $('#img_pos').text('[-90]Left: '+img_position.left+'; [-180]Top: '+img_position.top);
+          $('#img_pos').text('Left: '+img_position.left+'; Top: '+img_position.top);
           updateImg(img_position);
         }
 
