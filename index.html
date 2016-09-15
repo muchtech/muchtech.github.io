@@ -57,7 +57,7 @@
           info = xyz.replace("X", avg(acc.x));
           info = info.replace("Y", avg(acc.y));
           info = info.replace("Z", avg(acc.z));
-          $("#acceleration").text(info);
+          //$("#acceleration").text(info);
 
           // Grab the acceleration including gravity from the results
           acceleration = eventData.accelerationIncludingGravity;
@@ -71,11 +71,11 @@
           info = xyz.replace("X", avg(acc_gravity.x));
           info = info.replace("Y", avg(acc_gravity.y));
           info = info.replace("Z", avg(acc_gravity.z));
-          $("#accelerationIncludingGravity").text(info);
+          //$("#accelerationIncludingGravity").text(info);
 
           // Grab the refresh interval from the results
           info = eventData.interval;
-          $("#interval").text(info);       
+          //$("#interval").text(info);       
         }
 
         function deviceOrientationHandler(eventData) {
