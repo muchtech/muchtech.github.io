@@ -21,6 +21,8 @@
           var db = 0.1;
           if(Math.abs(old_val-new_val) > db) {
             old_val = new_val;
+          } else {
+            old_val = 0;
           }
           return old_val;
         }
