@@ -72,11 +72,20 @@
           info = xyz.replace("X", rotation.alpha);
           info = info.replace("Y", rotation.beta);
           info = info.replace("Z", rotation.gamma);
-          $("#rotationRate").text(info);
+          //$("#rotationRate").text(info);
 
           // // Grab the refresh interval from the results
           info = eventData.interval;
           $("#interval").text(info);       
+        }
+
+        function deviceOrientationHandler(eventData) {
+          console.log(eventData);
+          var info, xyz = "[X, Y, Z]";
+          info = xyz.replace("X", eventData.alpha);
+          info = info.replace("Y", eventData.beta);
+          info = info.replace("Z", eventData.gamma);
+          $("#rotationRate").text(info);
         }
 
         function updateImg(eventData) {
@@ -102,6 +111,7 @@
         if (window.DeviceMotionEvent) {
           $('#motion_info').text('Device motion supported');
           window.addEventListener('devicemotion', deviceMotionHandler, false);
+          window.addEventListener('deviceorientation', deviceOrientationHandler, false);
         } else {
           $('#motion_info').text('Device motion not supported');
         }
