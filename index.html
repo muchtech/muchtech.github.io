@@ -102,7 +102,7 @@
             left: -1*width * (avg(rotation.g)+90)/180,
             top: -1*height * (avg(rotation.b)+180)/360
           };
-          //alert('Left: '+img_position.left+'\nTop: '+img_position.top);
+          $('#img_pos').text('Left: '+img_position.left+'; Top: '+img_position.top);
           updateImg(img_position);
         }
 
@@ -160,6 +160,7 @@
     <div id="accelerationIncludingGravity"></div>
     <div id="rotationRate"></div>
     <div id="interval"></div>
+    <div id="img_pos"></div>
     <div id="img_zone" class="img_zone">
       <img class="img_crop" src="static/img/newyork.jpg"/>
     </div>
