@@ -34,6 +34,10 @@
           info = info.replace("Y", deadband(acc.y, acceleration.y));
           info = info.replace("Z", deadband(acc.z, acceleration.z));
           $("#acceleration").text(info);
+          info = xyz.replace("X", acc.x);
+          info = info.replace("Y", acc.y);
+          info = info.replace("Z", acc.z);
+          $("#acceleration_old").text(info);
 
           // Grab the acceleration including gravity from the results
           acceleration = eventData.accelerationIncludingGravity;
@@ -68,6 +72,7 @@
   <body>
     <div id="motion_info"></div>
     <div id="acceleration"></div>
+    <div id="acceleration_old"></div>
     <div id="accelerationIncludingGravity"></div>
     <div id="rotationRate"></div>
     <div id="interval"></div>
