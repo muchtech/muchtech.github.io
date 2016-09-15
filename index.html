@@ -6,19 +6,19 @@
     <script>
       $( document ).ready(function() {
         var acc = {
-          x: 0,
-          y: 0,
-          z: 0
+          x: [0,0,0,0,0,0,0,0,0,0],
+          y: [0,0,0,0,0,0,0,0,0,0],
+          z: [0,0,0,0,0,0,0,0,0,0]
         }
 
         var acc_gravity = {
-          x: 0,
-          y: 0,
-          z: 0
+          x: [0,0,0,0,0,0,0,0,0,0],
+          y: [0,0,0,0,0,0,0,0,0,0],
+          z: [0,0,0,0,0,0,0,0,0,0]
         }
 
         function deadband(old_val, new_val) {
-          var db = 5;
+          var db = 1;
           if(Math.abs(old_val-new_val) > db) {
             old_val = new_val;
           } else {
@@ -27,30 +27,43 @@
           return old_val;
         }
 
+        function avg(vals) {
+          var val_avg = 0;
+          for(var i=0; i<vals.length; i++) {
+            val_avg += vals[i];
+          }
+          return val_avg/vals.length;
+        }
+
         function deviceMotionHandler(eventData) {
           var info, xyz = "[X, Y, Z]";
 
           // Grab the acceleration from the results
           var acceleration = eventData.acceleration;
+          acc.x.shift();
+          acc.x.push(deadband(acc.x, acceleration.x));
+          acc.y.shift();
+          acc.y.push(deadband(acc.y, acceleration.y));
+          acc.z.shift();
+          acc.z.push(deadband(acc.z, acceleration.z));
 
-          acc.x = deadband(acc.x, acceleration.x);
-          acc.y = deadband(acc.y, acceleration.y);
-          acc.z = deadband(acc.z, acceleration.z);
-
-          info = xyz.replace("X", acc.x);
-          info = info.replace("Y", acc.y);
-          info = info.replace("Z", acc.z);
+          info = xyz.replace("X", avg(acc.x));
+          info = info.replace("Y", avg(acc.y));
+          info = info.replace("Z", avg(acc.z));
           $("#acceleration").text(info);
 
           // Grab the acceleration including gravity from the results
           acceleration = eventData.accelerationIncludingGravity;
-          acc_gravity.x = deadband(acc_gravity.x, acceleration.x);
-          acc_gravity.y = deadband(acc_gravity.y, acceleration.y);
-          acc_gravity.z = deadband(acc_gravity.z, acceleration.z);
+          acc_gravity.x.shift();
+          acc_gravity.x.push(deadband(acc_gravity.x, acceleration.x));
+          acc_gravity.y.shift();
+          acc_gravity.y.push(deadband(acc_gravity.y, acceleration.y));
+          acc_gravity.z.shift();
+          acc_gravity.z.push(deadband(acc_gravity.z, acceleration.z));
 
-          info = xyz.replace("X", acc_gravity.x);
-          info = info.replace("Y", acc_gravity.y);
-          info = info.replace("Z", acc_gravity.z);
+          info = xyz.replace("X", avg(acc_gravity.x));
+          info = info.replace("Y", avg(acc_gravity.y));
+          info = info.replace("Z", avg(acc_gravity.z));
           $("#accelerationIncludingGravity").text(info);
 
           // Grab the rotation rate from the results
