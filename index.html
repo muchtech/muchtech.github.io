@@ -17,6 +17,12 @@
           z: [0,0,0,0,0,0,0,0,0,0]
         }
 
+        var rotation = {
+          a: [0,0,0,0,0,0,0,0,0,0],
+          b: [0,0,0,0,0,0,0,0,0,0],
+          g: [0,0,0,0,0,0,0,0,0,0]
+        }
+
         function deadband(old_val, new_val) {
           var db = 1;
           if(Math.abs(old_val-new_val) > db) {
@@ -67,43 +73,57 @@
           info = info.replace("Z", avg(acc_gravity.z));
           $("#accelerationIncludingGravity").text(info);
 
-          // Grab the rotation rate from the results
-          var rotation = eventData.rotationRate;
-          info = xyz.replace("X", rotation.alpha);
-          info = info.replace("Y", rotation.beta);
-          info = info.replace("Z", rotation.gamma);
-          //$("#rotationRate").text(info);
-
-          // // Grab the refresh interval from the results
+          // Grab the refresh interval from the results
           info = eventData.interval;
           $("#interval").text(info);       
         }
 
         function deviceOrientationHandler(eventData) {
-          console.log(eventData);
+          var img = $('.img_crop')[0];
+          var width = img.clientWidth;
+          var height = img.clientHeight;
+          var array_last = rotation.a.length-2;
+
           var info, xyz = "[X, Y, Z]";
-          info = xyz.replace("X", eventData.alpha);
-          info = info.replace("Y", eventData.beta);
-          info = info.replace("Z", eventData.gamma);
+
+          rotation.a.shift();
+          rotation.a.push(deadband(rotation.a[array_last], eventData.alpha));
+          rotation.b.shift();
+          rotation.b.push(deadband(rotation.b[array_last], eventData.beta));
+          rotation.g.shift();
+          rotation.g.push(deadband(rotation.g[array_last], eventData.gamma));
+
+          info = xyz.replace("X", avg(rotation.a));
+          info = info.replace("Y", avg(rotation.b));
+          info = info.replace("Z", avg(rotation.g));
           $("#rotationRate").text(info);
+          var img_position = {
+            key: 'Rotation',
+            left: -1*width * (avg(rotation.b)+180)/360,
+            top: -1*height * (avg(rotation.g)+90)/180
+          };
+          updateImg(img_position);
         }
 
         function updateImg(eventData) {
-          console.log(eventData);
           var top_val = parseInt($('.img_crop').css('top'));
           var left_val = parseInt($('.img_crop').css('left'));
           switch(eventData.key) {
             case 'ArrowDown':
-              $('.img_crop').css('top', top_val-10+'px');
+              $('.img_crop').css('top', top_val-1+'px');
               break;
             case 'ArrowUp':
-              $('.img_crop').css('top', top_val+10+'px');
+              $('.img_crop').css('top', top_val+1+'px');
               break;
             case 'ArrowLeft':
-              $('.img_crop').css('left', left_val+10+'px');
+              $('.img_crop').css('left', left_val+1+'px');
               break;
             case 'ArrowRight':
-              $('.img_crop').css('left', left_val-10+'px');
+              $('.img_crop').css('left', left_val-1+'px');
+              break;
+            case 'Rotation':
+              $('.img_crop').css('left', eventData.left+'px');
+              $('.img_crop').css('top', eventData.top+'px');
               break;
           }
         }
@@ -122,8 +142,8 @@
     <style>
       .img_zone {
         position:relative;
-        width:200px;
-        height:200px;
+        width:400px;
+        height:400px;
         overflow:hidden;
       }
       .img_crop {
