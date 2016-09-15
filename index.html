@@ -18,7 +18,7 @@
         }
 
         function deadband(old_val, new_val) {
-          var db = 0.1;
+          var db = 0.5;
           if(Math.abs(old_val-new_val) > db) {
             old_val = new_val;
           } else {
@@ -65,14 +65,47 @@
           $("#interval").text(info);       
         }
 
+        function updateImg(eventData) {
+          console.log(eventData);
+          var top_val = parseInt($('.img_crop').css('top'));
+          var left_val = parseInt($('.img_crop').css('left'));
+          switch(eventData.key) {
+            case 'ArrowDown':
+              $('.img_crop').css('top', top_val-10+'px');
+              break;
+            case 'ArrowUp':
+              $('.img_crop').css('top', top_val+10+'px');
+              break;
+            case 'ArrowLeft':
+              $('.img_crop').css('left', left_val+10+'px');
+              break;
+            case 'ArrowRight':
+              $('.img_crop').css('left', left_val-10+'px');
+              break;
+          }
+        }
+
         if (window.DeviceMotionEvent) {
           $('#motion_info').text('Device motion supported');
           window.addEventListener('devicemotion', deviceMotionHandler, false);
         } else {
           $('#motion_info').text('Device motion not supported');
         }
+
+        $(document).keydown(updateImg);
       });
     </script>
+    <style>
+      .img_zone {
+        position:relative;
+        width:200px;
+        height:200px;
+        overflow:hidden;
+      }
+      .img_crop {
+        position:absolute;
+      }
+    </style>
     <title>Motion</title>
   </head>
 
@@ -82,5 +115,8 @@
     <div id="accelerationIncludingGravity"></div>
     <div id="rotationRate"></div>
     <div id="interval"></div>
+    <div id="img_zone" class="img_zone">
+      <img class="img_crop" src="static/img/newyork.jpg"/>
+    </div>
   </body>
 </html>
