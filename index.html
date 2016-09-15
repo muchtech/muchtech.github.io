@@ -18,7 +18,7 @@
         }
 
         function deadband(old_val, new_val) {
-          var db = 1;
+          var db = 5;
           if(Math.abs(old_val-new_val) > db) {
             old_val = new_val;
           } else {
