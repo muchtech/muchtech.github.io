@@ -31,8 +31,8 @@ $( document ).ready(function() {
     }
 
     function update() {
-        img_data.position.x += img_data.velocity.x;
-        img_data.position.y += img_data.velocity.y;
+        img_data.position.x -= img_data.velocity.x;
+        img_data.position.y -= img_data.velocity.y;
 
         if(-1*img_data.position.x > (img_w-w) && img_data.velocity.x > 0) {
            img_data.position.x = -1*(img_w-w);
