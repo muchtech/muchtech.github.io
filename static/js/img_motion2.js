@@ -52,7 +52,8 @@ $( document ).ready(function() {
 
         $img.css('left', '-'+img_data.position.x + 'px');
         $img.css('top', '-'+img_data.position.y + 'px');
-        window.setTimeout( callback, 1000 / 60 );
+
+        window.setTimeout(update, 1000/60);
     }
 
     init();
