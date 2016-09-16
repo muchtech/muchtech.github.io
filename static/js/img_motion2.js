@@ -22,7 +22,7 @@ $( document ).ready(function() {
 
         if(window.DeviceOrientationEvent) {
             window.addEventListener("deviceorientation", function(event){
-                    img_data.velocity.y = -1*Math.round(event.beta);
+                    img_data.velocity.y = -1*Math.round(event.beta)/2;
                     img_data.velocity.x = -1*Math.round(event.gamma);
             });
         };
