@@ -50,8 +50,8 @@ $( document ).ready(function() {
            img_data.position.y = 0;
         }
 
-        $img.css('left', '-'+img_data.position.x + 'px');
-        $img.css('top', '-'+img_data.position.y + 'px');
+        $img.css('left', img_data.position.x + 'px');
+        $img.css('top', img_data.position.y + 'px');
         $('#img_pos').text('Left: '+img_data.position.x+'; Top: '+img_data.position.y);
 
         window.setTimeout(update, 1000/60);
