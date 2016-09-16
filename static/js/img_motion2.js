@@ -52,6 +52,7 @@ $( document ).ready(function() {
 
         $img.css('left', '-'+img_data.position.x + 'px');
         $img.css('top', '-'+img_data.position.y + 'px');
+        $('#img_pos').text('Left: '+img_data.position.x+'; Top: '+img_data.position.y);
 
         window.setTimeout(update, 1000/60);
     }
